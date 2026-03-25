@@ -31,3 +31,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Spring Boot ###
+target/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.idea/
+.vscode/
+.DS_Store
