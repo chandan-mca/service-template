@@ -9,5 +9,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class ErrorResponse {
     private String status;
+    private String requestId;
     private Map<String, String> errors;
 }

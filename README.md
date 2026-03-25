@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a production-ready starter template for building backend services using Spring Boot. It demonstrates clean architecture, validation, logging, and centralized exception handling.
+This project is a production-ready backend service template built using Spring Boot. It demonstrates clean architecture, request tracing, validation, centralized exception handling, and API documentation using Swagger.
 
 ---
 
@@ -11,6 +11,7 @@ This project is a production-ready starter template for building backend service
 * Java 17
 * Spring Boot 3
 * Maven
+* SpringDoc OpenAPI (Swagger)
 
 ---
 
@@ -26,34 +27,27 @@ Application will start at:
 
 ---
 
-## API Endpoints
+## Swagger UI
 
-### 1. Health Check
+API documentation is available at:
 
-GET /health
+```
+http://localhost:8080/swagger-ui.html
+```
 
-Response:
+OpenAPI JSON:
 
-```json
-{
-  "status": "UP"
-}
+```
+http://localhost:8080/v3/api-docs
 ```
 
 ---
 
-### 2. Example API
+## API Endpoints
 
-POST /example
+### 1. Health Check
 
-Request:
-
-```json
-{
-  "userId": "123",
-  "value": 42
-}
-```
+**GET /api/v1/health**
 
 Response:
 
@@ -66,21 +60,87 @@ Response:
 
 ---
 
-## Design Decisions
+### 2. Example API
+
+**POST /api/v1/example**
+
+Request:
+
+```json
+{
+  "userId": "123",
+  "value": 42
+}
+```
+
+Success Response:
+
+```json
+{
+  "status": "SUCCESS",
+  "requestId": "uuid"
+}
+```
+
+Validation Error Response:
+
+```json
+{
+  "status": "ERROR",
+  "requestId": "uuid",
+  "errors": {
+    "userId": "userId is required"
+  }
+}
+```
+
+Invalid Request Response:
+
+```json
+{
+  "status": "ERROR",
+  "requestId": "uuid",
+  "errors": {
+    "message": "Invalid request body"
+  }
+}
+```
+
+---
+
+## Key Features
 
 * Layered architecture (Controller → Service → DTO)
-* DTO-based validation using annotations
-* Centralized exception handling using `@RestControllerAdvice`
-* Logging added for request tracing
-* Stateless design (no database used)
+* DTO validation using Jakarta Validation
+* Centralized exception handling (`@RestControllerAdvice`)
+* Structured and consistent API responses
+* Request tracing using `requestId` (MDC)
+* Detailed request/response logging with execution time
+* Swagger API documentation
+
+---
+
+## Design Decisions
+
+* Stateless service (no database dependency)
+* Clean separation of concerns
+* Consistent response structure across all APIs
+* Defensive coding for edge cases (null-safe handling)
+
+---
+
+## Observability
+
+* Unique `requestId` generated per request
+* End-to-end request tracing using MDC
+* Structured logs for debugging and monitoring
 
 ---
 
 ## Assumptions
 
 * No database required for current scope
-* Service is stateless
-* Simple synchronous processing
+* Service is synchronous and stateless
 
 ---
 

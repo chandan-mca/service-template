@@ -4,7 +4,3 @@ server:
 spring:
   application:
     name: service-template
-
-logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{requestId}]"
